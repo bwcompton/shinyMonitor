@@ -36,3 +36,12 @@ memory <- x$memory
 network <- x$network
 connects <- x$connects
 
+
+
+'do.plot' <- function() {
+   connects <- showMetrics('container_status', c('connect_count', 'connect_procs'), server = 'shinyapps.io', account = 'umassdsl', appName = 'EcoAssess', from = '90d', interval = '1m')
+   dygraph(connects) |>
+      dySeries('connect_count', label = 'Connections') |>
+      dySeries('connect_procs', label = 'Workers') 
+   
+}
