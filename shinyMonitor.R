@@ -29,13 +29,18 @@ network <- showMetrics('docker_container_net', c('tx_bytes', 'rx_bytes'), server
 cpu <- showMetrics('docker_container_cpu', 'usage_in_usermode', server = 'shinyapps.io', account = 'umassdsl', appName = 'EcoAssess', from = '90d', interval = '1m')
 saveRDS(list(cpu = cpu, memory = memory, network = network, connects = connects), 'c:/work/r/shinyMonitor/inst/data.RDS')
 
+usage <- showUsage(server = 'shinyapps.io', account = 'umassdsl', appName = 'EcoAssess', from = '90d', interval = '1d')
+dygraph(usage) |>
+   dySeries('hours', label = 'usage hours')
+
+
 # load everything
 x <- readRDS('c:/work/r/shinyMonitor/inst/data.RDS')
 cpu <- x$cpu
 memory <- x$memory
 network <- x$network
 connects <- x$connects
-
+data <- connects
 
 
 'do.plot' <- function() {
