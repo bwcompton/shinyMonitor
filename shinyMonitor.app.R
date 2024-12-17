@@ -23,7 +23,8 @@ source('smPlot.R')
 statisticChoices <- c('Connections' = 'connects', 'Memory' = 'mem', 'CPU' = 'cpu', 'Network' = 'net')
 resolutionChoices <- c('1 sec' = '1s', '5 sec' = '5s', '10 sec' = '10s', '30 sec' = '30s', 
                       '1 min' = '1m', '5 min' = '5m', '10 min' = '10m', '1 hour' = '1h')
-
+periodChoices <- c('1 day' = '1d', '2 days' = '2d', '3 days' = '3d', '1 week' = '1w', '2 weeks' = '2w',
+                   '1 month' = '30 d', '2 months' = '60 d', '3 months' = '90d')
 
 
 # User interface ---------------------
@@ -47,7 +48,7 @@ ui <- fluidPage(
    ), 
    
    layout_column_wrap(
-      width = 1/2, height = 400,
+      width = 1/2, height = 500,
       
       card(
          selectInput('account', label = 'Account', choices = accounts()$name),
@@ -55,12 +56,12 @@ ui <- fluidPage(
          selectInput('app', label = 'App', choices = NULL),
          #, choices =  applications(input$account)$name),
          
-         sliderInput('period', label = 'Time period', min = 0, max = 0, value = c(0, 0)),
+         selectInput('period', label = 'Time period', choices = periodChoices, selected = '1d'),
       ),
       card(
          selectInput('statistic', label = 'Statistic', choices = statisticChoices, selected = 'connects'),
          
-         selectInput('resolution', label = 'Time resolution', choices = resolutionChoices, selected = '10m'),
+         selectInput('resolution', label = 'Time resolution', choices = resolutionChoices, selected = '10s'),
          
          helpText('Last refreshed 5 min ago'),
          
